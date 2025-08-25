@@ -1,45 +1,51 @@
-# TypeScript Calculator
+# TypeScript Calculator - Phase 2
 
 ## Introduction
 
-A simple calculator application built with TypeScript that performs basic arithmetic operations. This project demonstrates fundamental TypeScript concepts including type annotations, DOM manipulation, and function declarations.
+A fully functional calculator application built with TypeScript featuring a complete button interface and advanced calculator operations. This enhanced version provides a professional calculator experience with all standard mathematical functions.
 
 ## Description
 
-This calculator provides a clean and intuitive interface for performing basic mathematical calculations. Built as part of Angular training exercises, it showcases TypeScript's type safety features while maintaining simplicity and functionality.
+This calculator offers a comprehensive digital calculator interface with number pad, operators, and display screen. Built as an advanced TypeScript project, it demonstrates state management, event handling, and modern calculator functionality with a sleek dark-themed design.
 
 ## Features
 
-- **Basic Arithmetic Operations**: Addition (+), Subtraction (-), Multiplication (*), and Division (/)
-- **Input Validation**: Checks for valid numeric inputs and displays appropriate error messages
-- **Type Safety**: Utilizes TypeScript's type system for better code reliability
-- **Responsive Interface**: Clean HTML interface with interactive buttons
-- **Error Handling**: Graceful handling of invalid inputs and operations
+- **Complete Number Pad**: All digits (0-9) with dedicated buttons
+- **Basic Arithmetic Operations**: Addition (+), Subtraction (-), Multiplication (×), and Division (/)
+- **Digital Display**: Real-time calculation display with error handling
+- **Clear Function**: Reset calculator with C button
+- **Delete Function**: Remove last entered character with backspace (⌫)
+- **Decimal Support**: Decimal point calculations
+- **Continuous Calculations**: Chain operations without clearing
+- **Error Handling**: Division by zero protection and input validation
+- **Professional Design**: Dark theme with color-coded buttons
 
 ## Live Demo
 
-🌐 **[View Live Calculator](https://srigayathriikumar.github.io/AngularTraining/DAY1/Ts-proj1/index.html)**
+🌐 **[View Live Calculator](https://srigayathriikumar.github.io/AngularTraining/DAY1/Ts-proj1phase2/index.html)**
 
 ## Usage
 
-1. Enter two numbers in the input fields
-2. Click on any operation button (+, -, *, /)
-3. View the result in the result field
-4. Invalid inputs will display an error message
+1. Click number buttons to enter values
+2. Click operator buttons (+, -, ×, /) to select operations
+3. Press = to calculate results
+4. Use C to clear all or ⌫ to delete last character
+5. Decimal point (.) supported for floating-point calculations
 
 ## Technologies Used
 
 - TypeScript
 - HTML5
-- CSS3
+- CSS3 Grid Layout
 - DOM Manipulation
+- State Management
 
 ## Project Structure
 
 ```
-Ts-proj1/
-├── app.ts          # Main TypeScript logic
-├── index.html      # HTML interface
-├── style.css       # Styling (if applicable)
+Ts-proj1phase2/
+├── app.ts          # Calculator logic and functions
+├── index.html      # Calculator interface
+├── style.css       # Modern calculator styling
 └── README.md       # Project documentation
 ```
