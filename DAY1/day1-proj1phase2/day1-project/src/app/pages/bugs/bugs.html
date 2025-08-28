@@ -1,0 +1,153 @@
+<div class="bugs-container">
+  <div class="bugs-header card">
+    <h1>🐞 Bug Management</h1>
+    <div class="header-actions">
+      <button class="btn btn-primary" (click)="showAddModal()">
+        ➕ Add New Bug
+      </button>
+      <div class="search-box">
+        <input type="text" placeholder="Search bugs..." [(ngModel)]="searchTerm" (input)="filterBugs()">
+      </div>
+    </div>
+  </div>
+
+  <div class="filters card">
+    <div class="filter-group">
+      <label>Status:</label>
+      <select [(ngModel)]="selectedStatus" (change)="filterBugs()">
+        <option value="">All</option>
+        <option value="Open">Open</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Closed">Closed</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Priority:</label>
+      <select [(ngModel)]="selectedPriority" (change)="filterBugs()">
+        <option value="">All</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        <option value="Critical">Critical</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="bugs-table card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Assigned To</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bug of filteredBugs">
+          <td>#{{bug.id}}</td>
+          <td>{{bug.title}}</td>
+          <td><span class="badge badge-{{bug.status.toLowerCase().replace(' ', '-')}}">{{bug.status}}</span></td>
+          <td><span class="badge badge-{{bug.priority.toLowerCase()}}">{{bug.priority}}</span></td>
+          <td>{{bug.assignedTo}}</td>
+          <td>{{bug.createdDate}}</td>
+          <td class="actions">
+            <button class="btn-icon" (click)="viewBug(bug)" title="View">👁️</button>
+            <button class="btn-icon" (click)="editBug(bug)" title="Edit">✏️</button>
+            <button class="btn-icon delete" (click)="deleteBug(bug.id)" title="Delete">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  <div class="modal" *ngIf="showModal" (click)="closeModal($event)">
+    <div class="modal-content card" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{isEditing ? 'Edit Bug' : 'Add New Bug'}}</h2>
+        <button class="close-btn" (click)="closeModal()">×</button>
+      </div>
+      
+      <form class="bug-form" (ngSubmit)="saveBug()">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" [(ngModel)]="currentBug.title" name="title" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-input" [(ngModel)]="currentBug.description" name="description" rows="4"></textarea>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-input" [(ngModel)]="currentBug.status" name="status">
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select class="form-input" [(ngModel)]="currentBug.priority" name="priority">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Critical">Critical</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Assigned To</label>
+          <input type="text" class="form-input" [(ngModel)]="currentBug.assignedTo" name="assignedTo">
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">{{isEditing ? 'Update' : 'Create'}} Bug</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Modal -->
+  <div class="modal" *ngIf="showViewModal" (click)="closeViewModal($event)">
+    <div class="modal-content card" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Bug Details</h2>
+        <button class="close-btn" (click)="closeViewModal()">×</button>
+      </div>
+      
+      <div class="bug-details" *ngIf="viewingBug">
+        <div class="detail-row">
+          <strong>ID:</strong> #{{viewingBug.id}}
+        </div>
+        <div class="detail-row">
+          <strong>Title:</strong> {{viewingBug.title}}
+        </div>
+        <div class="detail-row">
+          <strong>Description:</strong> {{viewingBug.description}}
+        </div>
+        <div class="detail-row">
+          <strong>Status:</strong> <span class="badge badge-{{viewingBug.status.toLowerCase().replace(' ', '-')}}">{{viewingBug.status}}</span>
+        </div>
+        <div class="detail-row">
+          <strong>Priority:</strong> <span class="badge badge-{{viewingBug.priority.toLowerCase()}}">{{viewingBug.priority}}</span>
+        </div>
+        <div class="detail-row">
+          <strong>Assigned To:</strong> {{viewingBug.assignedTo}}
+        </div>
+        <div class="detail-row">
+          <strong>Created:</strong> {{viewingBug.createdDate}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

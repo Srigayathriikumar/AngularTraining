@@ -1,0 +1,59 @@
+<div class="login-container">
+  <div class="login-card card">
+    <div class="login-header">
+      <h1>🔐 Welcome Back</h1>
+      <p>Sign in to access your bug tracking dashboard</p>
+    </div>
+
+    <form class="login-form" (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <div class="form-group">
+        <label class="form-label" for="email">📧 Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="form-input" 
+          [(ngModel)]="loginData.email" 
+          name="email"
+          placeholder="Enter your email"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">🔒 Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          class="form-input" 
+          [(ngModel)]="loginData.password" 
+          name="password"
+          placeholder="Enter your password"
+          required>
+      </div>
+
+      <div class="form-options">
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="rememberMe" name="remember">
+          <span class="checkmark"></span>
+          Remember me
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary login-btn" [disabled]="!loginForm.valid">
+        <span *ngIf="!isLoading">🚀 Sign In</span>
+        <span *ngIf="isLoading" class="loading"></span>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Don't have an account? <a href="#" class="signup-link">Sign up here</a></p>
+    </div>
+
+    <div class="demo-credentials card" *ngIf="showDemo">
+      <h3>🎯 Demo Credentials</h3>
+      <p><strong>Email:</strong> demo@bugdash.com</p>
+      <p><strong>Password:</strong> demo123</p>
+      <button class="btn btn-secondary" (click)="fillDemoCredentials()">📝 Use Demo Login</button>
+    </div>
+  </div>
+</div>

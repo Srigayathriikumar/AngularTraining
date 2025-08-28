@@ -1,0 +1,57 @@
+<div class="dashboard-container">
+  <div class="welcome-section card">
+    <h1>📊 Dashboard Overview</h1>
+    <p class="subtitle">Welcome back! Here's your bug tracking summary</p>
+  </div>
+
+  <div class="stats-grid grid grid-4">
+    <div class="stat-card card">
+      <div class="stat-icon">🐛</div>
+      <div class="stat-number">{{totalBugs}}</div>
+      <div class="stat-label">Total Bugs</div>
+    </div>
+    <div class="stat-card card">
+      <div class="stat-icon">🔴</div>
+      <div class="stat-number">{{openBugs}}</div>
+      <div class="stat-label">Open Bugs</div>
+    </div>
+    <div class="stat-card card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-number">{{closedBugs}}</div>
+      <div class="stat-label">Closed Bugs</div>
+    </div>
+    <div class="stat-card card">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-number">{{criticalBugs}}</div>
+      <div class="stat-label">Critical Bugs</div>
+    </div>
+  </div>
+
+  <div class="recent-activity card">
+    <h2>Recent Activity</h2>
+    <div class="activity-list">
+      <div class="activity-item" *ngFor="let activity of recentActivities">
+        <div class="activity-icon">{{activity.icon}}</div>
+        <div class="activity-content">
+          <div class="activity-title">{{activity.title}}</div>
+          <div class="activity-time">{{activity.time}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions card">
+    <h2>Quick Actions</h2>
+    <div class="actions-grid grid grid-3">
+      <button class="btn btn-primary" (click)="navigateTo('/bugs')">
+        🐞 View All Bugs
+      </button>
+      <button class="btn btn-success" (click)="showAddBugModal()">
+        ➕ Add New Bug
+      </button>
+      <button class="btn btn-secondary" (click)="generateReport()">
+        📊 Generate Report
+      </button>
+    </div>
+  </div>
+</div>
