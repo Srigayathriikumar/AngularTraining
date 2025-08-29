@@ -27,60 +27,33 @@ jobs:
         with:
           node-version: '20'
       
-      - name: Build day1-project
+      - name: Build Angular Projects
         run: |
+          # Build day1-project
           if [ -f "day1/day1-project/package.json" ]; then
+            echo "Building day1-project"
             cd day1/day1-project
-            npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/day1/day1-project/index.html"
+            npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/day1/day1-project/" || npm run build
+            cd ../..
           fi
-      
-      - name: Build day1-proj1phase2
-        run: |
-          if [ -f "day1/day1-proj1phase2/day1-project/package.json" ]; then
-            cd day1/day1-proj1phase2/day1-project
-            npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/day1/day1-proj1phase2/index.html"
-          fi
-      
-      - name: Build daybug-project
-        run: |
-          if [ -f "day1/daybug/day1-project/package.json" ]; then
-            cd day1/daybug/day1-project
-            npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/day1/daybug/"
-          fi
-      
-      - name: Build day2-project
-        run: |
-          if [ -f "day2/day2-project/package.json" ]; then
-            cd day2/day2-project
-            npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/day2/day2-project/"
-          fi
-      
-      - name: Build portfolio
-        run: |
+          
+          # Build portfolio
           if [ -f "day2/portfolio/package.json" ]; then
+            echo "Building portfolio"
             cd day2/portfolio
-            npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/day2/portfolio/"
+            npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/day2/portfolio/" || npm run build
+            cd ../..
           fi
-      
-      - name: Build student-portal
-        run: |
+          
+          # Build student-portal
           if [ -f "assessment/student-portal/package.json" ]; then
+            echo "Building student-portal"
             cd assessment/student-portal
-            npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/assessment/student-portal/"
-          fi
-      
-      - name: Build day3-frontend
-        run: |
-          if [ -f "day3/frontend/package.json" ]; then
-            cd day3/frontend
-            npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/day3/frontend/"
+            npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/assessment/student-portal/" || npm run build
+            cd ../..
           fi
       
       - name: Create deployment directory
@@ -89,43 +62,47 @@ jobs:
           cp index.html deploy/
           cp .nojekyll deploy/
           
+          echo "Checking built projects:"
+          find . -name "dist" -type d
+          
           # Copy Angular builds
           if [ -d "day1/day1-project/dist" ]; then
+            echo "Copying day1-project"
             mkdir -p deploy/day1/day1-project
-            cp -r day1/day1-project/dist/*/browser/* deploy/day1/day1-project/ 2>/dev/null || cp -r day1/day1-project/dist/* deploy/day1/day1-project/
-          fi
-          
-          if [ -d "day1/day1-proj1phase2/day1-project/dist" ]; then
-            mkdir -p deploy/day1/day1-proj1phase2
-            cp -r day1/day1-proj1phase2/day1-project/dist/*/browser/* deploy/day1/day1-proj1phase2/ 2>/dev/null || cp -r day1/day1-proj1phase2/day1-project/dist/* deploy/day1/day1-proj1phase2/
-          fi
-          
-          if [ -d "day1/daybug/day1-project/dist" ]; then
-            mkdir -p deploy/day1/daybug
-            cp -r day1/daybug/day1-project/dist/*/browser/* deploy/day1/daybug/ 2>/dev/null || cp -r day1/daybug/day1-project/dist/* deploy/day1/daybug/
-          fi
-          
-          if [ -d "day2/day2-project/dist" ]; then
-            mkdir -p deploy/day2/day2-project
-            cp -r day2/day2-project/dist/*/browser/* deploy/day2/day2-project/ 2>/dev/null || cp -r day2/day2-project/dist/* deploy/day2/day2-project/
+            if [ -d "day1/day1-project/dist/day1-project/browser" ]; then
+              cp -r day1/day1-project/dist/day1-project/browser/* deploy/day1/day1-project/
+            elif [ -d "day1/day1-project/dist/day1-project" ]; then
+              cp -r day1/day1-project/dist/day1-project/* deploy/day1/day1-project/
+            else
+              cp -r day1/day1-project/dist/* deploy/day1/day1-project/
+            fi
           fi
           
           if [ -d "day2/portfolio/dist" ]; then
+            echo "Copying portfolio"
             mkdir -p deploy/day2/portfolio
-            cp -r day2/portfolio/dist/*/browser/* deploy/day2/portfolio/ 2>/dev/null || cp -r day2/portfolio/dist/* deploy/day2/portfolio/
+            if [ -d "day2/portfolio/dist/portfolio/browser" ]; then
+              cp -r day2/portfolio/dist/portfolio/browser/* deploy/day2/portfolio/
+            elif [ -d "day2/portfolio/dist/portfolio" ]; then
+              cp -r day2/portfolio/dist/portfolio/* deploy/day2/portfolio/
+            else
+              cp -r day2/portfolio/dist/* deploy/day2/portfolio/
+            fi
           fi
           
           if [ -d "assessment/student-portal/dist" ]; then
+            echo "Copying student-portal"
             mkdir -p deploy/assessment/student-portal
-            cp -r assessment/student-portal/dist/*/browser/* deploy/assessment/student-portal/ 2>/dev/null || cp -r assessment/student-portal/dist/* deploy/assessment/student-portal/
+            if [ -d "assessment/student-portal/dist/student-portal/browser" ]; then
+              cp -r assessment/student-portal/dist/student-portal/browser/* deploy/assessment/student-portal/
+            elif [ -d "assessment/student-portal/dist/student-portal" ]; then
+              cp -r assessment/student-portal/dist/student-portal/* deploy/assessment/student-portal/
+            else
+              cp -r assessment/student-portal/dist/* deploy/assessment/student-portal/
+            fi
           fi
           
-          if [ -d "day3/frontend/dist" ]; then
-            mkdir -p deploy/day3/frontend
-            cp -r day3/frontend/dist/*/browser/* deploy/day3/frontend/ 2>/dev/null || cp -r day3/frontend/dist/* deploy/day3/frontend/
-          fi
-          
-          # Copy TypeScript projects
+          # Copy TypeScript projects as static files
           mkdir -p deploy/day1/typescript
           echo '<!DOCTYPE html><html><head><title>TypeScript Projects</title></head><body><h1>TypeScript Projects</h1><a href="ts-proj1/">Ts-proj1</a><br><a href="ts-proj1phase2/">Ts-proj1phase2</a><br><a href="ts-proj2/">Ts-proj2</a></body></html>' > deploy/day1/typescript/index.html
           
@@ -135,6 +112,9 @@ jobs:
               cp -r "day1/$proj"/* "deploy/day1/typescript/$proj/"
             fi
           done
+          
+          echo "Deploy directory contents:"
+          find deploy -type f | head -20
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
