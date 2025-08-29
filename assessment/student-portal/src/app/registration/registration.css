@@ -1,0 +1,212 @@
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.page-header.h1{
+  color:antiquewhite;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.registration-card {
+  background: var(--bg-primary);
+  border-radius: 20px;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  position: relative;
+}
+
+.registration-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+.card-header {
+  background: linear-gradient(135deg, rgba(83, 136, 97, 0.1) 0%, rgba(255, 174, 135, 0.1) 100%);
+  padding: 2rem;
+  text-align: center;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.card-header p {
+  margin: 0.5rem 0 0 0;
+  color: var(--text-secondary);
+}
+
+.form {
+  padding: 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.field label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.field label::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 174, 135, 0.4);
+}
+
+.field input,
+.field p-dropdown {
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.field input:focus,
+.field p-dropdown:focus {
+  transform: translateY(-1px);
+}
+
+.error {
+  color: var(--error-color);
+  font-size: 0.875rem;
+  min-height: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.error::before {
+  content: '⚠';
+  font-size: 0.75rem;
+}
+
+.ng-invalid.ng-touched {
+  border-color: var(--error-color) !important;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1) !important;
+}
+
+.submit-section {
+  padding: 0 2rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.submit-btn {
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  background: var(--gradient-primary);
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(83, 136, 97, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.success-message {
+  background: linear-gradient(135deg, var(--success-color), #059669);
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: slideUp 0.4s ease-out;
+}
+
+.success-message::before {
+  content: '✓';
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0;
+    padding: 1rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .form {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .card-header {
+    padding: 1.5rem;
+  }
+  
+  .submit-btn {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}

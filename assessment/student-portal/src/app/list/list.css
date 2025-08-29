@@ -1,0 +1,354 @@
+.container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: antiquewhite;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.page-subtitle {
+  color: rgba(250, 235, 215, 0.9);
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--bg-primary);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+}
+
+.table-section {
+  background: var(--bg-primary);
+  border-radius: 20px;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  position: relative;
+}
+
+.table-header {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.table-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.table-header p {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+}
+
+.form {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.field label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.field label::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 174, 135, 0.4);
+}
+
+.field input,
+.field p-dropdown {
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.field input:focus,
+.field p-dropdown:focus {
+  transform: translateY(-1px);
+}
+
+.error {
+  color: var(--error-color);
+  font-size: 0.875rem;
+  min-height: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.error::before {
+  content: '⚠';
+  font-size: 0.75rem;
+}
+
+.ng-invalid.ng-touched {
+  border-color: var(--error-color) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.empty-state-btn {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.empty-state-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(83, 136, 97, 0.3);
+}
+
+:host ::ng-deep .p-datatable {
+  border: none;
+  background: transparent;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: 1.25rem;
+  border: none;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background: linear-gradient(135deg, rgba(83, 136, 97, 0.05) 0%, rgba(255, 174, 135, 0.05) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(83, 136, 97, 0.1);
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 1.25rem;
+  border: none;
+  font-weight: 500;
+}
+
+:host ::ng-deep .p-dialog {
+  border-radius: 20px;
+  box-shadow: var(--shadow-xl);
+  border: none;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: 20px 20px 0 0;
+  padding: 2rem;
+  border: none;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 2rem;
+  border: none;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding: 1rem 2rem 2rem 2rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer .p-button {
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+}
+
+.student-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gradient-warm);
+  color: var(--text-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(255, 174, 135, 0.3);
+}
+
+.department-badge {
+  display: inline-block;
+  background: var(--gradient-cool);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  box-shadow: 0 2px 8px rgba(83, 136, 97, 0.3);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .stats-section {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .table-header {
+    padding: 1.5rem;
+  }
+  
+  :host ::ng-deep .p-datatable {
+    font-size: 0.875rem;
+  }
+  
+  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th,
+  :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  :host ::ng-deep .p-dialog {
+    width: 95% !important;
+    margin: 1rem;
+  }
+  
+  :host ::ng-deep .p-dialog .p-dialog-header,
+  :host ::ng-deep .p-dialog .p-dialog-content {
+    padding: 1.5rem;
+  }
+}
