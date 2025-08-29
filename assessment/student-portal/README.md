@@ -128,3 +128,8 @@ The application is fully responsive and optimized for:
 
 ## Sample Screenshots
 
+<img width="1867" height="916" alt="Screenshot 2025-08-29 125708" src="https://github.com/user-attachments/assets/b508be09-bafe-4890-aa9b-d295a3758743" />
+
+<img width="1874" height="921" alt="Screenshot 2025-08-29 125803" src="https://github.com/user-attachments/assets/6a3cb393-d94b-41db-ace9-3fc39160ad19" />
+
+<img width="1885" height="822" alt="Screenshot 2025-08-29 125859" src="https://github.com/user-attachments/assets/49cf7787-719f-4ccd-9237-d04d9147ef89" />
