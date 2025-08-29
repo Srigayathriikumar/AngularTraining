@@ -1,26 +1,153 @@
-name: Static Site
+name: Deploy All Projects to GitHub Pages
 
 on:
   push:
     branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: false
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          path: .
-      - id: deployment
+          node-version: '20'
+      
+      - name: Build day1-project
+        run: |
+          if [ -f "day1/day1-project/package.json" ]; then
+            cd day1/day1-project
+            npm ci --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/day1/day1-project/"
+          fi
+      
+      - name: Build day1-proj1phase2
+        run: |
+          if [ -f "day1/day1-proj1phase2/day1-project/package.json" ]; then
+            cd day1/day1-proj1phase2/day1-project
+            npm ci --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/day1/day1-proj1phase2/"
+          fi
+      
+      - name: Build daybug-project
+        run: |
+          if [ -f "day1/daybug/day1-project/package.json" ]; then
+            cd day1/daybug/day1-project
+            npm ci --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/day1/daybug/"
+          fi
+      
+      - name: Build day2-project
+        run: |
+          if [ -f "day2/day2-project/package.json" ]; then
+            cd day2/day2-project
+            npm ci --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/day2/day2-project/"
+          fi
+      
+      - name: Build portfolio
+        run: |
+          if [ -f "day2/portfolio/package.json" ]; then
+            cd day2/portfolio
+            npm ci --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/day2/portfolio/"
+          fi
+      
+      - name: Build student-portal
+        run: |
+          if [ -f "assessment/student-portal/package.json" ]; then
+            cd assessment/student-portal
+            npm ci --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/assessment/student-portal/"
+          fi
+      
+      - name: Build day3-frontend
+        run: |
+          if [ -f "day3/frontend/package.json" ]; then
+            cd day3/frontend
+            npm ci --legacy-peer-deps
+            npm run build -- --base-href="/AngularTraining/day3/frontend/"
+          fi
+      
+      - name: Create deployment directory
+        run: |
+          mkdir -p deploy
+          cp index.html deploy/
+          cp .nojekyll deploy/
+          
+          # Copy Angular builds
+          if [ -d "day1/day1-project/dist" ]; then
+            mkdir -p deploy/day1/day1-project
+            cp -r day1/day1-project/dist/*/browser/* deploy/day1/day1-project/ 2>/dev/null || cp -r day1/day1-project/dist/* deploy/day1/day1-project/
+          fi
+          
+          if [ -d "day1/day1-proj1phase2/day1-project/dist" ]; then
+            mkdir -p deploy/day1/day1-proj1phase2
+            cp -r day1/day1-proj1phase2/day1-project/dist/*/browser/* deploy/day1/day1-proj1phase2/ 2>/dev/null || cp -r day1/day1-proj1phase2/day1-project/dist/* deploy/day1/day1-proj1phase2/
+          fi
+          
+          if [ -d "day1/daybug/day1-project/dist" ]; then
+            mkdir -p deploy/day1/daybug
+            cp -r day1/daybug/day1-project/dist/*/browser/* deploy/day1/daybug/ 2>/dev/null || cp -r day1/daybug/day1-project/dist/* deploy/day1/daybug/
+          fi
+          
+          if [ -d "day2/day2-project/dist" ]; then
+            mkdir -p deploy/day2/day2-project
+            cp -r day2/day2-project/dist/*/browser/* deploy/day2/day2-project/ 2>/dev/null || cp -r day2/day2-project/dist/* deploy/day2/day2-project/
+          fi
+          
+          if [ -d "day2/portfolio/dist" ]; then
+            mkdir -p deploy/day2/portfolio
+            cp -r day2/portfolio/dist/*/browser/* deploy/day2/portfolio/ 2>/dev/null || cp -r day2/portfolio/dist/* deploy/day2/portfolio/
+          fi
+          
+          if [ -d "assessment/student-portal/dist" ]; then
+            mkdir -p deploy/assessment/student-portal
+            cp -r assessment/student-portal/dist/*/browser/* deploy/assessment/student-portal/ 2>/dev/null || cp -r assessment/student-portal/dist/* deploy/assessment/student-portal/
+          fi
+          
+          if [ -d "day3/frontend/dist" ]; then
+            mkdir -p deploy/day3/frontend
+            cp -r day3/frontend/dist/*/browser/* deploy/day3/frontend/ 2>/dev/null || cp -r day3/frontend/dist/* deploy/day3/frontend/
+          fi
+          
+          # Copy TypeScript projects
+          mkdir -p deploy/day1/typescript
+          echo '<!DOCTYPE html><html><head><title>TypeScript Projects</title></head><body><h1>TypeScript Projects</h1><a href="ts-proj1/">Ts-proj1</a><br><a href="ts-proj1phase2/">Ts-proj1phase2</a><br><a href="ts-proj2/">Ts-proj2</a></body></html>' > deploy/day1/typescript/index.html
+          
+          for proj in Ts-proj1 Ts-proj1phase2 Ts-proj2; do
+            if [ -d "day1/$proj" ]; then
+              mkdir -p "deploy/day1/typescript/$proj"
+              cp -r "day1/$proj"/* "deploy/day1/typescript/$proj/"
+            fi
+          done
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: deploy
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
