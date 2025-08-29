@@ -1,0 +1,254 @@
+@import 'primeicons/primeicons.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #538861;
+  --primary-dark: #3d6b47;
+  --primary-light: #6ba373;
+  --secondary-color: #ffae87;
+  --accent-color: #ff9966;
+  --success-color: #538861;
+  --warning-color: #ffae87;
+  --error-color: #e74c3c;
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --text-light: #718096;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7fafc;
+  --bg-tertiary: #edf2f7;
+  --bg-accent: #fff5f0;
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgba(83, 136, 97, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(83, 136, 97, 0.1), 0 2px 4px -1px rgba(83, 136, 97, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(83, 136, 97, 0.1), 0 4px 6px -2px rgba(83, 136, 97, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(83, 136, 97, 0.1), 0 10px 10px -5px rgba(83, 136, 97, 0.04);
+  --gradient-primary: linear-gradient(135deg, #538861 0%, #6ba373 100%);
+  --gradient-secondary: linear-gradient(135deg, #ffae87 0%, #ff9966 100%);
+  --gradient-bg: linear-gradient(135deg, #538861 0%, #ffae87 100%);
+  --gradient-warm: linear-gradient(135deg, #ffae87 0%, #ffc299 100%);
+  --gradient-cool: linear-gradient(135deg, #538861 0%, #4a7c59 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Custom PrimeNG Overrides */
+.p-button {
+  margin-right: 0.5rem;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.p-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.p-button:last-child {
+  margin-right: 0;
+}
+
+.p-button.p-button-secondary {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.p-button.p-button-secondary:hover {
+  background: var(--bg-tertiary);
+}
+
+.p-card {
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  border: none;
+  background: var(--bg-primary);
+}
+
+.p-card .p-card-header {
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  padding: 1.5rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.p-card .p-card-content {
+  padding: 2rem;
+}
+
+.p-inputtext {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  background: var(--bg-primary);
+}
+
+.p-inputtext:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(83, 136, 97, 0.15);
+}
+
+.p-dropdown {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+}
+
+.p-dropdown:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(83, 136, 97, 0.15);
+}
+
+.p-datatable {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--bg-primary);
+}
+
+.p-datatable .p-datatable-header {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  transition: all 0.2s ease;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background: linear-gradient(135deg, rgba(83, 136, 97, 0.05) 0%, rgba(255, 174, 135, 0.05) 100%);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.p-dialog {
+  border-radius: 12px;
+  box-shadow: var(--shadow-xl);
+}
+
+.p-dialog .p-dialog-header {
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  padding: 1.5rem;
+  font-weight: 600;
+}
+
+.p-dialog .p-dialog-content {
+  padding: 2rem;
+}
+
+.p-menubar {
+  background: var(--bg-primary);
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link {
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  margin: 0 0.25rem;
+}
+
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:hover {
+  background: var(--gradient-primary);
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Utility Classes */
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.gradient-text-warm {
+  background: var(--gradient-warm);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.accent-border {
+  border-left: 4px solid var(--secondary-color);
+}
+
+.success-accent {
+  background: linear-gradient(135deg, rgba(83, 136, 97, 0.1) 0%, rgba(83, 136, 97, 0.05) 100%);
+  border: 1px solid rgba(83, 136, 97, 0.2);
+}
+
+.warm-accent {
+  background: linear-gradient(135deg, rgba(255, 174, 135, 0.1) 0%, rgba(255, 174, 135, 0.05) 100%);
+  border: 1px solid rgba(255, 174, 135, 0.2);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

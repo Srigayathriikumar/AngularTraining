@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title">Student Directory</h1>
+    <p class="page-subtitle">Manage and view all registered students in the system</p>
+  </div>
+
+  <div class="stats-section">
+    <div class="stat-card">
+      <div class="stat-number">{{ students().length }}</div>
+      <div class="stat-label">Total Students</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ getDepartmentCount() }}</div>
+      <div class="stat-label">Departments</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ getAverageAge() }}</div>
+      <div class="stat-label">Average Age</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ getNewestStudent() }}</div>
+      <div class="stat-label">Latest Registration</div>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <div class="table-header">
+      <h3>Registered Students</h3>
+      <p>Click on any row to view and edit student details</p>
+    </div>
+
+    <p-table [value]="students()" [tableStyle]="{'min-width': '50rem'}" selectionMode="single" (onRowSelect)="onRowSelect($event)">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Student Name</th>
+          <th>Email Address</th>
+          <th>Age</th>
+          <th>Department</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-student>
+        <tr [pSelectableRow]="student">
+          <td>
+            <div class="student-badge">
+              🎓 {{ student.name }}
+            </div>
+          </td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.age }} years</td>
+          <td>
+            <span class="department-badge">{{ student.department }}</span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4">
+            <div class="empty-state">
+              <div class="empty-state-icon">📚</div>
+              <h3>No Students Registered</h3>
+              <p>Start building your student directory by registering the first student</p>
+              <a routerLink="/register" class="empty-state-btn">Register First Student</a>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog header="Edit Student Details" [modal]="true" [(visible)]="visible" [style]="{width: '600px'}">
+    <form [formGroup]="editForm" class="form">
+      <div class="form-row">
+        <div class="field">
+          <label for="editName">Full Name *</label>
+          <input pInputText id="editName" formControlName="name" placeholder="Enter full name" [class.ng-invalid]="editForm.get('name')?.invalid && editForm.get('name')?.touched" />
+          <small class="error">{{ getFieldError('name') }}</small>
+        </div>
+
+        <div class="field">
+          <label for="editEmail">Email Address *</label>
+          <input pInputText id="editEmail" type="email" formControlName="email" placeholder="Enter email address" [class.ng-invalid]="editForm.get('email')?.invalid && editForm.get('email')?.touched" />
+          <small class="error">{{ getFieldError('email') }}</small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="editAge">Age *</label>
+          <input pInputText id="editAge" type="number" formControlName="age" placeholder="Enter age" [class.ng-invalid]="editForm.get('age')?.invalid && editForm.get('age')?.touched" />
+          <small class="error">{{ getFieldError('age') }}</small>
+        </div>
+
+        <div class="field">
+          <label for="editDepartment">Department *</label>
+          <p-dropdown id="editDepartment" formControlName="department" [options]="departments" placeholder="Select department" [class.ng-invalid]="editForm.get('department')?.invalid && editForm.get('department')?.touched"></p-dropdown>
+          <small class="error">{{ getFieldError('department') }}</small>
+        </div>
+      </div>
+    </form>
+    
+    <ng-template pTemplate="footer">
+      <p-button label="Cancel" severity="secondary" (onClick)="onCancel()"></p-button>
+      <p-button label="Save Changes" (onClick)="onSave()" [disabled]="editForm.invalid"></p-button>
+    </ng-template>
+  </p-dialog>
+</div>

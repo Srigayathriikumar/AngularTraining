@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title" style="color:antiquewhite;">Student Registration</h1>
+    <p class="page-subtitle">Join our academic community and start your learning journey</p>
+  </div>
+
+  <div class="registration-card">
+    <div class="card-header">
+      <h2>Create Your Account</h2>
+      <p>Please fill in your details to register as a student</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-row">
+        <div class="field">
+          <label for="name">Full Name *</label>
+          <input pInputText id="name" formControlName="name" placeholder="Enter your full name" [class.ng-invalid]="form.get('name')?.invalid && form.get('name')?.touched" />
+          <small class="error">{{ getFieldError('name') }}</small>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address *</label>
+          <input pInputText id="email" type="email" formControlName="email" placeholder="Enter your email" [class.ng-invalid]="form.get('email')?.invalid && form.get('email')?.touched" />
+          <small class="error">{{ getFieldError('email') }}</small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="age">Age *</label>
+          <input pInputText id="age" type="number" formControlName="age" placeholder="Enter your age" [class.ng-invalid]="form.get('age')?.invalid && form.get('age')?.touched" />
+          <small class="error">{{ getFieldError('age') }}</small>
+        </div>
+
+        <div class="field">
+          <label for="department">Department *</label>
+          <p-dropdown id="department" formControlName="department" [options]="departments" placeholder="Select your department" [class.ng-invalid]="form.get('department')?.invalid && form.get('department')?.touched"></p-dropdown>
+          <small class="error">{{ getFieldError('department') }}</small>
+        </div>
+      </div>
+    </form>
+
+    <div class="submit-section">
+      <button type="submit" class="submit-btn" [disabled]="form.invalid" (click)="onSubmit()">
+        Register Student
+      </button>
+    </div>
+  </div>
+</div>
