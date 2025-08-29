@@ -1,255 +1,26 @@
-name: Deploy All Projects to GitHub Pages
+name: Static Site
 
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      
-      # Build Angular Projects
-      - name: Build day1-project
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build -- --base-href="/Angular-Training/day1/day1-project/"
-        working-directory: day1/day1-project
-      
-      - name: Build day1-proj1phase2
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build -- --base-href="/Angular-Training/day1/day1-proj1phase2/"
-        working-directory: day1/day1-proj1phase2/day1-project
-      
-      - name: Build daybug-project
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build -- --base-href="/Angular-Training/day1/daybug/"
-        working-directory: day1/daybug/day1-project
-      
-      - name: Build day2-project
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build -- --base-href="/Angular-Training/day2/day2-project/"
-        working-directory: day2/day2-project
-      
-      - name: Build portfolio
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build -- --base-href="/Angular-Training/day2/portfolio/"
-        working-directory: day2/portfolio
-      
-      - name: Build student-portal
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build -- --base-href="/Angular-Training/assessment/student-portal/"
-        working-directory: assessment/student-portal
-      
-      - name: Build day3-frontend
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build -- --base-href="/Angular-Training/day3/frontend/"
-        working-directory: day3/frontend
-      
-      # Build TypeScript Projects
-      - name: Build TypeScript Projects
-        run: |
-          for dir in day1/Ts-proj1 day1/Ts-proj1phase2 day1/Ts-proj2; do
-            if [ -f "$dir/package.json" ]; then
-              cd "$dir"
-              npm ci --legacy-peer-deps
-              npm run build || true
-              cd - > /dev/null
-            fi
-          done
-      
-      # Build Spring Boot Backend (for documentation)
-      - name: Build Spring Boot Backend
-        run: |
-          if [ -f "day3/backend/pom.xml" ]; then
-            cd day3/backend
-            ./mvnw clean package -DskipTests
-            cd - > /dev/null
-          fi
-      
-      - name: Create deployment directory
-        run: |
-          mkdir -p deploy
-          
-          # Create main index.html
-          cat > deploy/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <title>Angular Training Projects</title>
-              <style>
-                  body { font-family: Arial, sans-serif; margin: 40px; }
-                  .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-                  .project-card { border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
-                  .project-card h3 { margin-top: 0; color: #333; }
-                  .project-link { display: inline-block; padding: 8px 16px; background: #007acc; color: white; text-decoration: none; border-radius: 4px; }
-                  .project-link:hover { background: #005a9e; }
-              </style>
-          </head>
-          <body>
-              <h1>Angular Training Projects</h1>
-              <div class="project-grid">
-                  <div class="project-card">
-                      <h3>Day 1 - Main Project</h3>
-                      <p>Bug tracking application with login and dashboard</p>
-                      <a href="day1/day1-project/" class="project-link">View Project</a>
-                  </div>
-                  <div class="project-card">
-                      <h3>Day 1 - Phase 2</h3>
-                      <p>Enhanced version with additional features</p>
-                      <a href="day1/day1-proj1phase2/" class="project-link">View Project</a>
-                  </div>
-                  <div class="project-card">
-                      <h3>Day 1 - Bug Tracker</h3>
-                      <p>Specialized bug tracking interface</p>
-                      <a href="day1/daybug/" class="project-link">View Project</a>
-                  </div>
-                  <div class="project-card">
-                      <h3>Day 2 - Project</h3>
-                      <p>Advanced Angular features implementation</p>
-                      <a href="day2/day2-project/" class="project-link">View Project</a>
-                  </div>
-                  <div class="project-card">
-                      <h3>Portfolio</h3>
-                      <p>Personal portfolio website</p>
-                      <a href="day2/portfolio/" class="project-link">View Project</a>
-                  </div>
-                  <div class="project-card">
-                      <h3>Student Portal</h3>
-                      <p>Student management system</p>
-                      <a href="assessment/student-portal/" class="project-link">View Project</a>
-                  </div>
-                  <div class="project-card">
-                      <h3>Day 3 - Frontend</h3>
-                      <p>Full-stack application frontend</p>
-                      <a href="day3/frontend/" class="project-link">View Project</a>
-                  </div>
-                  <div class="project-card">
-                      <h3>TypeScript Projects</h3>
-                      <p>Basic TypeScript implementations</p>
-                      <a href="day1/typescript/" class="project-link">View Projects</a>
-                  </div>
-              </div>
-          </body>
-          </html>
-          EOF
-          
-          echo "" > deploy/.nojekyll
-          
-          # Copy Angular builds
-          mkdir -p deploy/day1/day1-project
-          if [ -d "day1/day1-project/dist" ]; then
-            cp -r day1/day1-project/dist/*/browser/* deploy/day1/day1-project/ 2>/dev/null || cp -r day1/day1-project/dist/* deploy/day1/day1-project/
-          fi
-          
-          mkdir -p deploy/day1/day1-proj1phase2
-          if [ -d "day1/day1-proj1phase2/day1-project/dist" ]; then
-            cp -r day1/day1-proj1phase2/day1-project/dist/*/browser/* deploy/day1/day1-proj1phase2/ 2>/dev/null || cp -r day1/day1-proj1phase2/day1-project/dist/* deploy/day1/day1-proj1phase2/
-          fi
-          
-          mkdir -p deploy/day1/daybug
-          if [ -d "day1/daybug/day1-project/dist" ]; then
-            cp -r day1/daybug/day1-project/dist/*/browser/* deploy/day1/daybug/ 2>/dev/null || cp -r day1/daybug/day1-project/dist/* deploy/day1/daybug/
-          fi
-          
-          mkdir -p deploy/day2/day2-project
-          if [ -d "day2/day2-project/dist" ]; then
-            cp -r day2/day2-project/dist/*/browser/* deploy/day2/day2-project/ 2>/dev/null || cp -r day2/day2-project/dist/* deploy/day2/day2-project/
-          fi
-          
-          mkdir -p deploy/day2/portfolio
-          if [ -d "day2/portfolio/dist" ]; then
-            cp -r day2/portfolio/dist/*/browser/* deploy/day2/portfolio/ 2>/dev/null || cp -r day2/portfolio/dist/* deploy/day2/portfolio/
-          fi
-          
-          mkdir -p deploy/assessment/student-portal
-          if [ -d "assessment/student-portal/dist" ]; then
-            cp -r assessment/student-portal/dist/*/browser/* deploy/assessment/student-portal/ 2>/dev/null || cp -r assessment/student-portal/dist/* deploy/assessment/student-portal/
-          fi
-          
-          mkdir -p deploy/day3/frontend
-          if [ -d "day3/frontend/dist" ]; then
-            cp -r day3/frontend/dist/*/browser/* deploy/day3/frontend/ 2>/dev/null || cp -r day3/frontend/dist/* deploy/day3/frontend/
-          fi
-          
-          # Copy TypeScript projects
-          mkdir -p deploy/day1/typescript
-          cat > deploy/day1/typescript/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <title>TypeScript Projects</title>
-              <style>
-                  body { font-family: Arial, sans-serif; margin: 40px; }
-                  .project { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-                  .project-link { display: inline-block; padding: 8px 16px; background: #007acc; color: white; text-decoration: none; border-radius: 4px; margin: 5px; }
-              </style>
-          </head>
-          <body>
-              <h1>TypeScript Projects</h1>
-              <div class="project">
-                  <h3>Ts-proj1</h3>
-                  <a href="ts-proj1/" class="project-link">View Project</a>
-              </div>
-              <div class="project">
-                  <h3>Ts-proj1phase2</h3>
-                  <a href="ts-proj1phase2/" class="project-link">View Project</a>
-              </div>
-              <div class="project">
-                  <h3>Ts-proj2</h3>
-                  <a href="ts-proj2/" class="project-link">View Project</a>
-              </div>
-          </body>
-          </html>
-          EOF
-          
-          for proj in Ts-proj1 Ts-proj1phase2 Ts-proj2; do
-            if [ -d "day1/$proj" ]; then
-              mkdir -p "deploy/day1/typescript/$proj"
-              cp -r "day1/$proj"/* "deploy/day1/typescript/$proj/"
-            fi
-          done
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: deploy
-
   deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
         uses: actions/deploy-pages@v4
