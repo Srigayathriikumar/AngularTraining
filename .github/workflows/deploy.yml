@@ -32,7 +32,7 @@ jobs:
           if [ -f "day1/day1-project/package.json" ]; then
             cd day1/day1-project
             npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/day1/day1-project/"
+            npm run build -- --base-href="/AngularTraining/day1/day1-project/index.html"
           fi
       
       - name: Build day1-proj1phase2
@@ -40,7 +40,7 @@ jobs:
           if [ -f "day1/day1-proj1phase2/day1-project/package.json" ]; then
             cd day1/day1-proj1phase2/day1-project
             npm ci --legacy-peer-deps
-            npm run build -- --base-href="/AngularTraining/day1/day1-proj1phase2/"
+            npm run build -- --base-href="/AngularTraining/day1/day1-proj1phase2/index.html"
           fi
       
       - name: Build daybug-project
