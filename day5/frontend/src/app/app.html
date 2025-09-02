@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <h2>Bug Tracker</h2>
+  </div>
+  <div class="navbar-menu">
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">Dashboard</a>
+    <a routerLink="/bugs" routerLinkActive="active" class="nav-link">Bugs</a>
+    <div *ngIf="auth.isAuthenticated(); else loginLink" class="user-menu">
+      <span class="username">{{auth.getUsername()}}</span>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+    </div>
+    <ng-template #loginLink>
+      <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+    </ng-template>
+  </div>
+</nav>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
