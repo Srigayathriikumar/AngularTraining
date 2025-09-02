@@ -1,0 +1,42 @@
+<section class="skills">
+  <div class="container">
+    <h1>Skills & Experience</h1>
+    
+    <div class="skills-grid">
+      <div class="skills-section">
+        <h2>Technical Skills</h2>
+        <div class="skills-categories">
+          <div class="skill-category" *ngFor="let category of skillCategories">
+            <h3>{{ category.name }}</h3>
+            <div class="skills-list">
+              <div class="skill-item" *ngFor="let skill of category.skills">
+                <span class="skill-name">{{ skill.name }}</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" [style.width.%]="skill.level"></div>
+                </div>
+                <span class="skill-level">{{ skill.level }}%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-section">
+        <h2>Experience & Internships</h2>
+        <div class="experience-timeline">
+          <div class="experience-item" *ngFor="let exp of experiences">
+            <div class="experience-date">{{ exp.period }}</div>
+            <div class="experience-content">
+              <h3>{{ exp.position }}</h3>
+              <h4>{{ exp.company }}</h4>
+              <p>{{ exp.description }}</p>
+              <div class="experience-skills">
+                <span class="exp-skill" *ngFor="let skill of exp.skills">{{ skill }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

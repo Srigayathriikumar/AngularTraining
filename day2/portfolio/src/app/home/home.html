@@ -1,0 +1,18 @@
+<section class="hero">
+  <div class="profile-left">
+    <div class="profile-image">
+      <img src="Media.jpg" alt="Profile Picture">
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="content-right">
+    <div class="bg-shapes"></div>
+    <h1>{{ name }}</h1>
+    <h2>{{ title }}</h2>
+    <p class="intro">{{ intro }}</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" (click)="downloadResume()">Download Resume</button>
+      <button class="btn-secondary" (click)="viewProjects()">View Projects</button>
+    </div>
+  </div>
+</section>

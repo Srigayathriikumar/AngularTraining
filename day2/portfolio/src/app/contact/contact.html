@@ -1,0 +1,96 @@
+<section class="contact">
+  <div class="container">
+    <h1>Contact Me</h1>
+    
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Get In Touch</h2>
+        <p>I'm always open to discussing new opportunities and interesting projects. Feel free to reach out!</p>
+        
+        <div class="contact-methods">
+          <div class="contact-method">
+            <div class="contact-icon">📧</div>
+            <div>
+              <h3>Linkedin</h3>
+              <p>{{ contactInfo.email }}</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="contact-icon">📱</div>
+            <div>
+              <h3>GitHub</h3>
+              <p>{{ contactInfo.phone }}</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="contact-icon">📍</div>
+            <div>
+              <h3>Location</h3>
+              <p>{{ contactInfo.location }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h2>Send Message</h2>
+        <form (ngSubmit)="sendEmail()" #contactForm="ngForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              [(ngModel)]="formData.name" 
+              required
+              #name="ngModel">
+            <div *ngIf="name.invalid && name.touched" class="error">Name is required</div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              [(ngModel)]="formData.email" 
+              required 
+              email
+              #email="ngModel">
+            <div *ngIf="email.invalid && email.touched" class="error">Valid email is required</div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input 
+              type="text" 
+              id="subject" 
+              name="subject" 
+              [(ngModel)]="formData.subject" 
+              required
+              #subject="ngModel">
+            <div *ngIf="subject.invalid && subject.touched" class="error">Subject is required</div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea 
+              id="message" 
+              name="message" 
+              rows="5" 
+              [(ngModel)]="formData.message" 
+              required
+              #message="ngModel"></textarea>
+            <div *ngIf="message.invalid && message.touched" class="error">Message is required</div>
+          </div>
+
+          <button type="submit" class="btn-send" [disabled]="contactForm.invalid">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
