@@ -2,6 +2,20 @@
   <div class="container">
     <h1>Contact Me</h1>
     
+    <!-- Success Message -->
+    <!-- Success Message -->
+    <div *ngIf="showSuccessMessage" class="success-notification">
+      <i class="pi pi-check-circle"></i>
+      <span>Email sent successfully! I'll get back to you soon.</span>
+    </div>
+    
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-notification" (click)="clearError()">
+      <i class="pi pi-exclamation-triangle"></i>
+      <span>{{ errorMessage }}</span>
+      <i class="pi pi-times close-btn"></i>
+    </div>
+    
     <div class="contact-grid">
       <div class="contact-info">
         <h2>Get In Touch</h2>
@@ -9,23 +23,39 @@
         
         <div class="contact-methods">
           <div class="contact-method">
-            <div class="contact-icon">📧</div>
+            <div class="contact-icon"><i class="pi pi-linkedin"></i></div>
             <div>
-              <h3>Linkedin</h3>
-              <p>{{ contactInfo.email }}</p>
+              <h3>LinkedIn</h3>
+              <p><a [href]="contactInfo.linkedin" target="_blank" style="color: #991b1b; text-decoration: none;">View Profile</a></p>
             </div>
           </div>
           
           <div class="contact-method">
-            <div class="contact-icon">📱</div>
+            <div class="contact-icon"><i class="pi pi-github"></i></div>
             <div>
               <h3>GitHub</h3>
+              <p><a [href]="contactInfo.github" target="_blank" style="color: #991b1b; text-decoration: none;">View Projects</a></p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="contact-icon"><i class="pi pi-envelope"></i></div>
+            <div>
+              <h3>Email</h3>
+              <p><a [href]="'mailto:' + contactInfo.email" style="color: #991b1b; text-decoration: none;">{{ contactInfo.email }}</a></p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="contact-icon"><i class="pi pi-phone"></i></div>
+            <div>
+              <h3>Phone</h3>
               <p>{{ contactInfo.phone }}</p>
             </div>
           </div>
           
           <div class="contact-method">
-            <div class="contact-icon">📍</div>
+            <div class="contact-icon"><i class="pi pi-map-marker"></i></div>
             <div>
               <h3>Location</h3>
               <p>{{ contactInfo.location }}</p>
@@ -86,8 +116,9 @@
             <div *ngIf="message.invalid && message.touched" class="error">Message is required</div>
           </div>
 
-          <button type="submit" class="btn-send" [disabled]="contactForm.invalid">
-            Send Message
+          <button type="submit" class="btn-send" [disabled]="contactForm.invalid || isLoading">
+            <i class="pi" [class.pi-send]="!isLoading" [class.pi-spin]="isLoading" [class.pi-spinner]="isLoading"></i>
+            {{ isLoading ? 'Sending...' : 'Send Message' }}
           </button>
         </form>
       </div>

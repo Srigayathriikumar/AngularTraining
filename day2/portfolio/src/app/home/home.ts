@@ -16,8 +16,10 @@ export class Home {
   constructor(private router: Router) {}
 
   downloadResume() {
-    // Add your resume download logic here
-    console.log('Download resume clicked');
+    const link = document.createElement('a');
+    link.href = 'srigayathri_resume.pdf';
+    link.download = 'srigayathri_resume.pdf';
+    link.click();
   }
 
   viewProjects() {

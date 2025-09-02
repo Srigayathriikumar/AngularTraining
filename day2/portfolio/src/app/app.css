@@ -11,7 +11,7 @@ body {
 }
 
 .navbar {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b1b 50%, #4a1a1a 100%);
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #333333 100%);
   padding: 1rem 0;
   position: fixed;
   top: 0;
@@ -32,7 +32,7 @@ body {
 .nav-logo {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #dc2626;
+  color: #d2b48c;
 }
 
 .nav-menu {
@@ -52,8 +52,8 @@ body {
 
 .nav-menu a:hover,
 .nav-menu a.active {
-  background: linear-gradient(135deg, #dc2626, #991b1b);
-  color: white;
+  background: linear-gradient(135deg, #d2b48c, #bc9a6a);
+  color: black;
   backdrop-filter: blur(10px);
 }
 

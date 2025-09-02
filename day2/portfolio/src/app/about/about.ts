@@ -43,5 +43,5 @@ export class About {
     }
   ];
 
-  bio = 'I am a passionate full-stack developer with a strong foundation in modern web technologies. My journey in programming started during my college years, and I have since developed expertise in various programming languages and frameworks. I enjoy solving complex problems and creating user-friendly applications that make a difference.';
+  bio = 'I am a passionate software developer with a strong foundation in modern web technologies. My journey in programming started during my college years, and I have since developed expertise in various programming languages and frameworks. I enjoy solving complex problems and creating user-friendly applications that make a difference.';
 }

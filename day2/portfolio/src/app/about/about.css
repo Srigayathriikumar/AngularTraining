@@ -1,27 +1,12 @@
 .about {
   min-height: 100vh;
-  background: 
-    #0a0a0a,
-    radial-gradient(circle at 20% 30%, rgba(220, 38, 38, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(153, 27, 27, 0.2) 0%, transparent 50%),
-    linear-gradient(45deg, transparent 40%, rgba(220, 38, 38, 0.1) 50%, transparent 60%);
-  background-size: 100% 100%, 600px 600px, 800px 800px, 200px 200px;
-  animation: redPulse 6s ease-in-out infinite;
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 30%, #333333 70%, #ffffff 100%);
   position: relative;
-  overflow: hidden;
+  animation: fadeIn 1s ease-out;
+  scroll-behavior: smooth;
 }
 
-.animated-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    repeating-conic-gradient(from 0deg, transparent 0deg, rgba(220, 38, 38, 0.1) 30deg, transparent 60deg),
-    repeating-linear-gradient(90deg, transparent 0px, rgba(220, 38, 38, 0.05) 1px, transparent 20px);
-  animation: dynamicSpin 12s linear infinite, redWave 8s ease-in-out infinite;
-}
+
 
 .container {
   max-width: 1200px;
@@ -40,9 +25,9 @@
 .main-title {
   font-size: 3.5rem;
   font-weight: 800;
-  color: #f5f5f5;
+  color: #ffffff;
   margin-bottom: 1rem;
-  background: linear-gradient(45deg, #f5f5f5, #dc2626, #f5f5f5);
+  background: linear-gradient(45deg, #ffffff, #d2b48c, #ffffff);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -53,7 +38,7 @@
 .title-underline {
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #dc2626, #991b1b);
+  background: linear-gradient(90deg, #d2b48c, #bc9a6a);
   margin: 0 auto;
   border-radius: 2px;
   animation: expandLine 1s ease-out 0.5s both;
@@ -64,16 +49,19 @@
   grid-template-columns: 300px 1fr;
   gap: 3rem;
   align-items: start;
+  justify-items: stretch;
 }
 
 .profile-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(210, 180, 140, 0.5);
   border-radius: 20px;
   padding: 2rem;
   text-align: center;
-  position: relative;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
   animation: slideInLeft 1s ease-out 0.3s both;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
@@ -84,7 +72,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, #000, #333, #000);
+  background: linear-gradient(45deg, #d2b48c, #bc9a6a, #d2b48c);
   border-radius: 20px;
   z-index: -1;
   opacity: 0;
@@ -103,7 +91,7 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #dc2626;
+  border: 3px solid #d2b48c;
 }
 
 .avatar-ring {
@@ -112,7 +100,7 @@
   left: -10px;
   right: -10px;
   bottom: -10px;
-  border: 2px solid rgba(220, 38, 38, 0.3);
+  border: 2px solid rgba(210, 180, 140, 0.5);
   border-radius: 50%;
   animation: ringRotate 8s linear infinite;
 }
@@ -124,7 +112,7 @@
 }
 
 .role {
-  color: #dc2626;
+  color: #5d3809;
   font-weight: 600;
   font-size: 1.1rem;
 }
@@ -133,15 +121,17 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
 }
 
 .info-section {
   background: rgba(40, 40, 40, 0.9);
   backdrop-filter: blur(5px);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(210, 180, 140, 0.4);
   border-radius: 15px;
   padding: 2rem;
   position: relative;
+  width: 100%;
   animation: slideInRight 1s ease-out both;
 }
 
@@ -153,7 +143,7 @@
   position: absolute;
   top: -15px;
   left: 2rem;
-  background: linear-gradient(45deg, #dc2626, #991b1b);
+  background: linear-gradient(45deg, #d2b48c, #bc9a6a);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -161,6 +151,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
+  color: black;
 }
 
 .info-section h2 {
@@ -178,7 +169,7 @@
 
 .info-card {
   background: rgba(60, 60, 60, 0.8);
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(210, 180, 140, 0.5);
   border-radius: 10px;
   padding: 1rem;
   display: flex;
@@ -189,11 +180,11 @@
 
 .info-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 10px 25px rgba(210, 180, 140, 0.3);
 }
 
 .info-label {
-  color: #dc2626;
+  color: #d2b48c;
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -215,7 +206,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, #dc2626, #991b1b);
+  background: linear-gradient(to bottom, #d2b48c, #bc9a6a);
 }
 
 .timeline-item {
@@ -234,7 +225,7 @@
   top: 5px;
   width: 16px;
   height: 16px;
-  background: #dc2626;
+  background: #d2b48c;
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.2);
   animation: dotPulse 2s ease-in-out infinite;
@@ -244,7 +235,7 @@
   background: rgba(60, 60, 60, 0.8);
   border-radius: 10px;
   padding: 1.5rem;
-  border-left: 3px solid #dc2626;
+  border-left: 3px solid #d2b48c;
 }
 
 .timeline-content h4 {
@@ -254,7 +245,7 @@
 }
 
 .institution {
-  color: #dc2626;
+  color: #d2b48c;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -266,7 +257,7 @@
 }
 
 .gpa {
-  color: #dc2626;
+  color: #d2b48c;
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -275,7 +266,7 @@
   background: rgba(60, 60, 60, 0.8);
   border-radius: 10px;
   padding: 2rem;
-  border-left: 4px solid #dc2626;
+  border-left: 4px solid #d2b48c;
 }
 
 .bio-content p {
@@ -285,46 +276,7 @@
   margin: 0;
 }
 
-@keyframes redPulse {
-  0%, 100% {
-    background-position: 0% 0%, 0% 0%, 100% 100%, 0% 0%;
-  }
-  50% {
-    background-position: 0% 0%, 50% 50%, 0% 0%, 100% 100%;
-  }
-}
 
-@keyframes dynamicSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes redWave {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.1);
-  }
-}
-
-@keyframes conicSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pulseRings {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.2;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.05;
-  }
-}
 
 @keyframes fadeInDown {
   from { transform: translateY(-30px); opacity: 0; }
@@ -375,6 +327,11 @@
   .content-wrapper {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+  
+  .profile-card {
+    position: relative;
+    top: auto;
   }
   
   .main-title {
