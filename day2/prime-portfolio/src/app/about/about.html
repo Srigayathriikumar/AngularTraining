@@ -1,0 +1,58 @@
+<section class="about">
+  <div class="animated-bg"></div>
+  <div class="container">
+    <div class="section-header">
+      <h1 class="main-title">About Me</h1>
+      <div class="title-underline"></div>
+    </div>
+    
+    <div class="content-wrapper">
+      <div class="profile-card">
+        <div class="card-glow"></div>
+        <div class="profile-avatar">
+          <img src="Media.jpg" alt="Profile">
+          <div class="avatar-ring"></div>
+        </div>
+        <h3>{{ personalInfo.name }}</h3>
+        <p class="role">Software Developer</p>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-section personal-info">
+          <div class="section-icon"><i class="pi pi-user"></i></div>
+          <h2>Personal Details</h2>
+          <div class="info-cards">
+            <div class="info-card" *ngFor="let item of personalInfoArray">
+              <span class="info-label">{{ item.label }}</span>
+              <span class="info-value">{{ item.value }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section education">
+          <div class="section-icon"><i class="pi pi-graduation-cap"></i></div>
+          <h2>Education</h2>
+          <div class="timeline">
+            <div class="timeline-item" *ngFor="let edu of education; let i = index">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h4>{{ edu.degree }}</h4>
+                <p class="institution">{{ edu.institution }}</p>
+                <span class="year">{{ edu.year }}</span>
+                <span class="gpa" *ngIf="edu.gpa">{{ edu.gpa }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section bio-section">
+          <div class="section-icon"><i class="pi pi-file-edit"></i></div>
+          <h2>About</h2>
+          <div class="bio-content">
+            <p>{{ bio }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
