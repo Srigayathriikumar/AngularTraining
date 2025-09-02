@@ -173,18 +173,6 @@ npm run watch
 - **Lifecycle Hooks**: Component initialization and cleanup
 - **TypeScript Integration**: Strong typing and interfaces
 
-## Browser Support
+## Sample output screenshots:
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers
-
-## Development Notes
-
-- Uses Angular 20 standalone components
-- Implements modern TypeScript features
-- Follows Angular style guide conventions
-- Responsive design principles
-- Component-scoped styling
+<img width="1884" height="655" alt="Screenshot 2025-08-29 112327" src="https://github.com/user-attachments/assets/fa76f172-be74-4122-9207-57c018533ade" />
