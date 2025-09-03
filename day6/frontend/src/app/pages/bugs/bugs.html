@@ -1,0 +1,70 @@
+<div class="bugs-container">
+  <div class="header">
+    <h1>🐛 BUG DASH</h1>
+    <div class="stats">
+      <span class="stat-item">Total: {{bugs.length}}</span>
+      <span class="stat-item">Filtered: {{filteredBugs.length}}</span>
+    </div>
+  </div>
+  
+  <div class="filters-card">
+    <div class="filter-group">
+      <label>Status:</label>
+      <select [(ngModel)]="selectedStatus" (change)="filterBugs()">
+        <option *ngFor="let status of statusOptions" [value]="status.value">{{status.label}}</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Priority:</label>
+      <select [(ngModel)]="selectedPriority" (change)="filterBugs()">
+        <option *ngFor="let priority of priorityOptions" [value]="priority.value">{{priority.label}}</option>
+      </select>
+    </div>
+  </div>
+  
+  <div *ngIf="error" class="error">{{error}}</div>
+  
+  <div *ngIf="bugs.length > 0; else noBugs" class="table-container">
+    <table class="bugs-table">
+      <thead>
+        <tr>
+          <th (click)="sortBy('id')" class="sortable">ID <span class="sort-icon">{{sortColumn === 'id' ? (sortDirection === 'asc' ? '↑' : '↓') : '↕'}}</span></th>
+          <th (click)="sortBy('title')" class="sortable">Title <span class="sort-icon">{{sortColumn === 'title' ? (sortDirection === 'asc' ? '↑' : '↓') : '↕'}}</span></th>
+          <th (click)="sortBy('status')" class="sortable">Status <span class="sort-icon">{{sortColumn === 'status' ? (sortDirection === 'asc' ? '↑' : '↓') : '↕'}}</span></th>
+          <th (click)="sortBy('priority')" class="sortable">Priority <span class="sort-icon">{{sortColumn === 'priority' ? (sortDirection === 'asc' ? '↑' : '↓') : '↕'}}</span></th>
+          <th (click)="sortBy('assignee')" class="sortable">Assignee <span class="sort-icon">{{sortColumn === 'assignee' ? (sortDirection === 'asc' ? '↑' : '↓') : '↕'}}</span></th>
+          <th (click)="sortBy('project')" class="sortable">Project <span class="sort-icon">{{sortColumn === 'project' ? (sortDirection === 'asc' ? '↑' : '↓') : '↕'}}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bug of paginatedBugs" class="table-row">
+          <td>{{bug.id}}</td>
+          <td>{{bug.title}}</td>
+          <td><span class="status-badge" [ngClass]="'status-' + bug.status.toLowerCase().replace(' ', '-')">{{bug.status}}</span></td>
+          <td><span class="priority-badge" [ngClass]="'priority-' + bug.priority.toLowerCase()">{{bug.priority}}</span></td>
+          <td>{{bug.assignee}}</td>
+          <td>{{bug.project}}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="page-btn">‹</button>
+      <button *ngFor="let page of [].constructor(totalPages); let i = index" 
+              (click)="goToPage(i + 1)" 
+              [class.active]="currentPage === i + 1" 
+              class="page-btn">{{i + 1}}</button>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-btn">›</button>
+    </div>
+  </div>
+  
+  <ng-template #noBugs>
+    <div class="no-bugs">
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No bugs found</h3>
+        <p>Try adjusting your filters or check back later.</p>
+      </div>
+    </div>
+  </ng-template>
+</div>
