@@ -1,0 +1,113 @@
+<div class="admin-dashboard">
+    <h2>📊 Admin Dashboard</h2>
+
+    <!-- Bug Statistics Charts -->
+    <div class="charts-container">
+        <div class="chart-row">
+            <div class="chart-card">
+                <h3>Open vs Closed Bugs</h3>
+                <p-chart *ngIf="openResolvedData" type="doughnut" [data]="openResolvedData" [options]="chartOptions" width="400" height="400"></p-chart>
+                <p *ngIf="!openResolvedData">Loading chart data...</p>
+            </div>
+            
+            <div class="chart-card">
+                <h3>Bugs by Priority</h3>
+                <p-chart *ngIf="bugsByPriorityData" type="doughnut" [data]="bugsByPriorityData" [options]="chartOptions" width="400" height="400"></p-chart>
+                <p *ngIf="!bugsByPriorityData">Loading chart data...</p>
+            </div>
+        </div>
+        
+        <div class="chart-row">
+            <div class="chart-card">
+                <h3>Bugs by Project</h3>
+                <p-chart *ngIf="bugsByProjectData" type="bar" [data]="bugsByProjectData" [options]="barChartOptions" height="300"></p-chart>
+                <p *ngIf="!bugsByProjectData">Loading chart data...</p>
+            </div>
+            
+            <div class="chart-card">
+                <h3>Bugs by Status</h3>
+                <p-chart *ngIf="bugsByStatusData" type="pie" [data]="bugsByStatusData" [options]="chartOptions" width="400" height="400"></p-chart>
+                <p *ngIf="!bugsByStatusData">Loading chart data...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Statistics -->
+    <div class="stats-summary" *ngIf="Stats">
+        <h3>Summary Statistics</h3>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">{{ Stats.openVsClosed.open }}</span>
+                <span class="stat-label">Open Bugs</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ Stats.openVsClosed.closed }}</span>
+                <span class="stat-label">Closed Bugs</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ Stats.bugsByPriority.HIGH || 0 }}</span>
+                <span class="stat-label">High Priority</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ Stats.bugsByPriority.MEDIUM || 0 }}</span>
+                <span class="stat-label">Medium Priority</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Management Section -->
+    <div class="user-management">
+        <h3>User Management</h3>
+        <button (click)="addUser()" class="action-btn">Add User</button>
+        <table class="users-table" *ngIf="users.length > 0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <button (click)="editUser(user)" class="edit-btn">Edit</button>
+                        <button (click)="deleteUser(user)" class="delete-btn">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p *ngIf="users.length === 0" class="no-users">No users found. Click "Add User" to get started.</p>
+    </div>
+
+    <!-- User Chart Section -->
+    <div class="user-chart" *ngIf="showUserChart">
+        <h3>User Statistics</h3>
+        <div class="chart-card">
+            <p-chart type="pie" [data]="userChartData" [options]="chartOptions" width="400" height="400"></p-chart>
+        </div>
+    </div>
+
+    <!-- Reports Section -->
+    <div class="reports">
+        <h3>Reports</h3>
+        <button (click)="generateReport()" class="action-btn">Generate Report</button>
+        <div *ngIf="report" class="report-summary">
+            <h4>Report Summary</h4>
+            <pre>{{ report | json }}</pre>
+        </div>
+    </div>
+
+    <!-- Report Chart Section -->
+    <div class="report-chart" *ngIf="showReportChart">
+        <h3>Report Analytics</h3>
+        <div class="chart-card">
+            <p-chart type="bar" [data]="reportChartData" [options]="barChartOptions" height="300"></p-chart>
+        </div>
+    </div>
+</div>
