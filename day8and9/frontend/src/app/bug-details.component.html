@@ -1,0 +1,337 @@
+<div class="bug-details-container">
+    <div class="bug-header" *ngIf="bug">
+        <p-card>
+            <div class="bug-title-section">
+                <h1>{{ bug.title }}</h1>
+                <div class="bug-badges">
+                    <span class="priority-badge priority-{{ bug.priority.toLowerCase() }}">{{ bug.priority }}</span>
+                    <span class="status-badge status-{{ bug.status.toLowerCase().replace(' ', '-') }}">{{ bug.status }}</span>
+                </div>
+            </div>
+            
+            <div class="bug-meta">
+                <div class="meta-item">
+                    <strong>Project:</strong> {{ bug.project }}
+                </div>
+                <div class="meta-item">
+                    <strong>Assignee:</strong> {{ bug.assignee }}
+                </div>
+                <div class="meta-item">
+                    <strong>Bug ID:</strong> #{{ bug.id }}
+                </div>
+            </div>
+        </p-card>
+    </div>
+
+    <div class="comments-section" *ngIf="bug">
+        <p-card header="💬 Comments">
+            <div class="comments-container">
+                <div class="comments-list" *ngIf="bug.comments && bug.comments.length > 0; else noComments">
+                    <div *ngFor="let comment of bug.comments; let i = index" class="comment-item">
+                        <div class="comment-header">
+                            <div class="comment-author">
+                                <i class="pi pi-user"></i>
+                                <strong>{{ comment.author }}</strong>
+                            </div>
+                            <div class="comment-time" *ngIf="comment.createdAt">
+                                <i class="pi pi-clock"></i>
+                                {{ comment.createdAt | date:'short' }}
+                            </div>
+                        </div>
+                        <div class="comment-message">
+                            {{ comment.message }}
+                        </div>
+                    </div>
+                </div>
+                
+                <ng-template #noComments>
+                    <div class="no-comments">
+                        <i class="pi pi-comment"></i>
+                        <p>No comments yet. Be the first to add a comment!</p>
+                    </div>
+                </ng-template>
+            </div>
+
+            <div class="add-comment-section">
+                <h4>Add New Comment</h4>
+                <form (ngSubmit)="addComment()" #commentForm="ngForm" class="comment-form">
+                    <div class="form-group">
+                        <p-textarea 
+                            [(ngModel)]="newComment" 
+                            name="comment" 
+                            required 
+                            placeholder="Write your comment here..." 
+                            rows="4"
+                            class="comment-textarea">
+                        </p-textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <p-button 
+                            type="button" 
+                            (click)="addComment()" 
+                            [disabled]="!newComment || !newComment.trim()" 
+                            label="Add Comment"
+                            icon="pi pi-plus"
+                            class="add-comment-btn">
+                        </p-button>
+                        <p-button 
+                            type="button" 
+                            (click)="clearComment()" 
+                            label="Clear"
+                            icon="pi pi-times"
+                            severity="secondary"
+                            class="clear-btn">
+                        </p-button>
+                    </div>
+                </form>
+            </div>
+        </p-card>
+    </div>
+
+    <div class="actions-section">
+        <p-button 
+            routerLink="/bugs" 
+            label="Back to Bugs" 
+            icon="pi pi-arrow-left"
+            severity="secondary">
+        </p-button>
+    </div>
+
+    <div *ngIf="!bug" class="no-bug-selected">
+        <p-card>
+            <div class="empty-state">
+                <i class="pi pi-exclamation-triangle"></i>
+                <h3>No Bug Selected</h3>
+                <p>Please select a bug from the bugs list to view details and comments.</p>
+                <p-button routerLink="/bugs" label="Go to Bugs" icon="pi pi-list"></p-button>
+            </div>
+        </p-card>
+    </div>
+</div>
+
+<style>
+.bug-details-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.bug-header {
+    margin-bottom: 20px;
+}
+
+.bug-title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.bug-title-section h1 {
+    color: #333;
+    margin: 0;
+    font-size: 24px;
+    flex: 1;
+    min-width: 300px;
+}
+
+.bug-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.priority-badge, .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.priority-high { background: #dc3545; color: white; }
+.priority-medium { background: #ffc107; color: #212529; }
+.priority-low { background: #28a745; color: white; }
+
+.status-open { background: #007bff; color: white; }
+.status-in-progress { background: #fd7e14; color: white; }
+.status-closed { background: #6c757d; color: white; }
+
+.bug-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+}
+
+.meta-item {
+    color: #495057;
+}
+
+.comments-section {
+    margin-bottom: 20px;
+}
+
+.comments-container {
+    margin-bottom: 25px;
+}
+
+.comments-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.comment-item {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.2s;
+}
+
+.comment-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #495057;
+    font-size: 14px;
+}
+
+.comment-time {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.comment-message {
+    color: #212529;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.no-comments {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+}
+
+.no-comments i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.add-comment-section {
+    border-top: 1px solid #dee2e6;
+    padding-top: 20px;
+}
+
+.add-comment-section h4 {
+    color: #495057;
+    margin-bottom: 15px;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.comment-textarea {
+    width: 100%;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.actions-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.no-bug-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+}
+
+.empty-state i {
+    font-size: 64px;
+    color: #ffc107;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.empty-state h3 {
+    color: #495057;
+    margin-bottom: 15px;
+}
+
+.empty-state p {
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .bug-details-container {
+        padding: 10px;
+    }
+    
+    .bug-title-section {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .bug-title-section h1 {
+        min-width: auto;
+    }
+    
+    .bug-meta {
+        grid-template-columns: 1fr;
+    }
+    
+    .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
+</style>

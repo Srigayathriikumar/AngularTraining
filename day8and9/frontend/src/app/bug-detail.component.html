@@ -1,0 +1,24 @@
+<div class="bug-details" *ngIf="bug">
+    <p-card>
+        <h2>{{ bug.title }}</h2>
+        <p><strong>Description:</strong> {{ bug.description }}</p>
+        <p><strong>Priority:</strong> {{ bug.priority }}</p>
+        <p><strong>Status:</strong> {{ bug.status }}</p>
+        <p><strong>Project:</strong> {{ bug.project }}</p>
+        
+        <h3>Comments</h3>
+        <ul>
+            <li *ngFor="let comment of bug.comments">
+                {{ comment }}
+            </li>
+        </ul>
+
+        <form (ngSubmit)="addComment()" #commentForm="ngForm">
+            <p-textarea [(ngModel)]="newComment" name="comment" required placeholder="Add a comment"></p-textarea>
+            <p-button type="submit" [disabled]="!commentForm.form.valid" label="Add Comment"></p-button>
+        </form>
+    </p-card>
+</div>
+<div *ngIf="!bug">
+    <p>No bug selected.</p>
+</div>
